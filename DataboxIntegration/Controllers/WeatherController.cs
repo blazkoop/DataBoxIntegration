@@ -25,6 +25,10 @@ public class WeatherController : ControllerBase
         _logger = logger;
     }
     
+    /// <summary>
+    /// Fetches weather data from Weatherstack and sends it to Databox
+    /// </summary>
+    /// <param name="location">Example: London,New York, Maribor...</param>
     [HttpPost("sendWeatherData/{location}")]
     public async Task<IActionResult> SendWeatherData(string location)
     {
@@ -91,6 +95,10 @@ public class WeatherController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Fetches weather data from Weatherstack
+    /// </summary>
+    /// <param name="location">Example: London,New York, Maribor...</param>
     [HttpGet("weather/preview/{location}")]
     public async Task<IActionResult> PreviewWeatherData(string location)
     {

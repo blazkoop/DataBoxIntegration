@@ -25,6 +25,10 @@ public class MarketController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Fetches market data from Marketstack and sends it to Databox
+    /// </summary>
+    /// <param name="symbols">Example: AAPL,MSFT...</param>
     [HttpPost("sendMarketData/{symbols}")]
     public async Task<IActionResult> SendMarketData(string symbols, [FromQuery] int limit = 5)
     {
@@ -91,6 +95,10 @@ public class MarketController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Fetches market data from Marketstack and sends it to Databox
+    /// </summary>
+    /// <param name="symbols">Example: AAPL,MSFT...</param>
     [HttpGet("market/preview/{symbols}")]
     public async Task<IActionResult> PreviewMarketData(string symbols, [FromQuery] int limit = 5)
     {
