@@ -18,20 +18,22 @@ A .NET 8 Web API that fetches data from external providers (Weatherstack, Market
    cd DataBoxIntegration
    ```
 
-2. Create a `.env` file in the `DataboxIntegration` folder:
-   ```bash
-   cd DataboxIntegration
-   cp .env.example .env
-   ```
+   2. Create a `.env` file in the `DataboxIntegration` folder:
+      ```bash
+      cd DataboxIntegration
+      cp .env.example .env
+      ```
 
-3. Edit `.env` and add your API keys and Databox configuration:
-   ```
-   ApiKeys__Weatherstack=your_weatherstack_api_key
-   ApiKeys__Marketstack=your_marketstack_api_key
-   ApiKeys__Databox=your_databox_api_key
-   Databox__WeatherDatasetId=your_weather_dataset_id
-   Databox__MarketDatasetId=your_market_dataset_id
-   ```
+      3. Edit `.env` and add your API keys and Databox configuration:
+         ```
+         APIKEYS__DATABOX=your_databox_api_key
+          APIKEYS__WEATHERSTACK=your_weatherstack_api_key
+          APIKEYS__MARKETSTACK=your_marketstack_api_key
+          DATABOX__WEATHERDATASETID=weather_dataset_id
+          DATABOX__MARKETDATASETID=market_dataset_id
+          DATABOX__DATASOURCEID=datasource_id
+          DATABOX__ACCOUNTID=databox_account_id
+         ```
 
 4. Restore dependencies:
    ```bash
