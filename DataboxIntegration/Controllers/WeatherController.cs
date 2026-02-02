@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataboxIntegration.Models;
 using DataboxIntegration.Services;
-using DataboxIntegration.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DataboxIntegration.Controllers;
 
@@ -31,8 +31,7 @@ public class WeatherController : ControllerBase
         try
         {
             _logger.LogInformation("=== Starting sendWeatherData for {Location} ===", location);
-            
-            // Step 1: Get weather data from Weatherstack
+
             _logger.LogInformation("Step 1: Getting weather data...");
             List<WeatherDataset> weatherData = await _weatherService.GetWeatherDataAsync(location);
             
@@ -48,16 +47,13 @@ public class WeatherController : ControllerBase
             }
             
             _logger.LogInformation("Weather data retrieved: {Count} record(s)", weatherData.Count);
-            
-            // Step 2: Data is already parsed into WeatherDataset model
+
             _logger.LogInformation("Step 2: Data parsed into dataset format");
-            
-            // Step 3: Send to Databox using Ingestion API
+
             _logger.LogInformation("Step 3: Sending to Databox...");
             bool success = await _databoxService.SendWeatherDataAsync(weatherData);
-            
-            // Log the data send operation
-            int columns = 6; // id, location, temperature, humidity, weather_description, occurredAt
+
+            int columns = 6;
             _fileLogger.LogDataSend("Weatherstack", weatherData.Count, columns, success, success ? null : "Failed to send to Databox");
             
             if (success)
@@ -94,10 +90,7 @@ public class WeatherController : ControllerBase
             return StatusCode(500, errorResponse);
         }
     }
-    
-    /// <summary>
-    /// Preview weather data without sending to Databox
-    /// </summary>
+
     [HttpGet("weather/preview/{location}")]
     public async Task<IActionResult> PreviewWeatherData(string location)
     {

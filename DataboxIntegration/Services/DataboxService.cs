@@ -15,8 +15,7 @@ public class DataboxService
         _httpClient = httpClient;
         _configuration = configuration;
         _logger = logger;
-        
-        // Set up headers
+
         string apiKey = _configuration["ApiKeys:Databox"];
         _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
     }
@@ -33,9 +32,8 @@ public class DataboxService
                 return false;
             }
             
-            // Convert models to dictionaries for Databox API
             List<Dictionary<string, object>> records = new List<Dictionary<string, object>>();
-            
+
             foreach (WeatherDataset weather in weatherData)
             {
                 Dictionary<string, object> record = new Dictionary<string, object>
@@ -50,13 +48,12 @@ public class DataboxService
                 
                 records.Add(record);
             }
-            
-            // Create request payload
+
             object payload = new
             {
                 records = records
             };
-            
+
             string json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true });
             _logger.LogInformation("Sending {Count} weather record(s) to Databox:\n{Json}", records.Count, json);
             
@@ -99,9 +96,8 @@ public class DataboxService
                 return false;
             }
             
-            // Convert models to dictionaries for Databox API
             List<Dictionary<string, object>> records = new List<Dictionary<string, object>>();
-            
+
             foreach (MarketDataset market in marketData)
             {
                 Dictionary<string, object> record = new Dictionary<string, object>
@@ -119,13 +115,12 @@ public class DataboxService
                 
                 records.Add(record);
             }
-            
-            // Create request payload
+
             object payload = new
             {
                 records = records
             };
-            
+
             string json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true });
             _logger.LogInformation("Sending {Count} market records to Databox:\n{Json}", records.Count, json);
             

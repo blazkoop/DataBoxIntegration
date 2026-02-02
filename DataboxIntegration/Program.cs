@@ -1,7 +1,6 @@
 using DataboxIntegration.Services;
 using DotNetEnv;
 
-// Load environment variables from .env file
 Env.Load();
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -10,7 +9,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Register services
 builder.Services.AddSingleton<IFileLogger, FileLogger>();
 builder.Services.AddHttpClient<WeatherService>();
 builder.Services.AddHttpClient<MarketService>();

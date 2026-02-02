@@ -1,13 +1,7 @@
 ﻿using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace DataboxIntegration.Services;
 
-/// <summary>
-/// Abstract base class for external data services
-/// Provides common functionality for API calls and data parsing
-/// </summary>
 public abstract class BaseDataService<TDataset>
 {
     protected readonly HttpClient _httpClient;

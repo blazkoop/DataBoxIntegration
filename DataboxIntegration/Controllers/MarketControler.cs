@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataboxIntegration.Models;
 using DataboxIntegration.Services;
-using DataboxIntegration.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DataboxIntegration.Controllers;
 
@@ -25,18 +25,13 @@ public class MarketController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Send market data to Databox
-    /// Flow: Get market data -> Parse into dataset format -> Send to Databox
-    /// </summary>
     [HttpPost("sendMarketData/{symbols}")]
     public async Task<IActionResult> SendMarketData(string symbols, [FromQuery] int limit = 5)
     {
         try
         {
             _logger.LogInformation("=== Starting sendMarketData for {Symbols} ===", symbols);
-            
-            // Step 1: Get market data from Marketstack
+
             _logger.LogInformation("Step 1: Getting market data...");
             List<MarketDataset> marketData = await _marketService.GetMarketDataAsync(symbols, limit);
             
@@ -52,16 +47,13 @@ public class MarketController : ControllerBase
             }
             
             _logger.LogInformation("Market data retrieved: {Count} records", marketData.Count);
-            
-            // Step 2: Data is already parsed into MarketDataset model
+
             _logger.LogInformation("Step 2: Data parsed into dataset format");
-            
-            // Step 3: Send to Databox using Ingestion API
+
             _logger.LogInformation("Step 3: Sending to Databox...");
             bool success = await _databoxService.SendMarketDataAsync(marketData);
-            
-            // Log the data send operation
-            int columns = 9; // id, symbol, date, open, high, low, close, volume, occurredAt
+
+            int columns = 9;
             _fileLogger.LogDataSend("Marketstack", marketData.Count, columns, success, success ? null : "Failed to send to Databox");
             
             if (success)
@@ -98,10 +90,7 @@ public class MarketController : ControllerBase
             return StatusCode(500, errorResponse);
         }
     }
-    
-    /// <summary>
-    /// Preview market data without sending to Databox
-    /// </summary>
+
     [HttpGet("market/preview/{symbols}")]
     public async Task<IActionResult> PreviewMarketData(string symbols, [FromQuery] int limit = 5)
     {

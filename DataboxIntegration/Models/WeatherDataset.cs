@@ -1,8 +1,5 @@
 namespace DataboxIntegration.Models;
 
-/// <summary>
-/// Weather data formatted for Databox dataset
-/// </summary>
 public class WeatherDataset
 {
     public string Id { get; set; }

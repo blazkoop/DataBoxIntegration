@@ -75,7 +75,6 @@ public class MarketService : BaseDataService<MarketDataset>
         return marketDatasets;
     }
 
-    // Convenience method with typed parameters
     public async Task<List<MarketDataset>> GetMarketDataAsync(string symbols, int limit)
     {
         return await GetDataAsync(symbols, limit);

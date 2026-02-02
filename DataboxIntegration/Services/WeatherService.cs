@@ -25,17 +25,14 @@ public class WeatherService : BaseDataService<WeatherDataset>
     {
         List<WeatherDataset> weatherDatasets = new List<WeatherDataset>();
 
-        // Extract location data
         JsonElement locationElement = jsonDoc.RootElement.GetProperty("location");
         string locationName = locationElement.GetProperty("name").GetString() ?? "";
 
-        // Extract current weather data
         JsonElement currentElement = jsonDoc.RootElement.GetProperty("current");
         int temperature = currentElement.GetProperty("temperature").GetInt32();
         int humidity = currentElement.GetProperty("humidity").GetInt32();
         string weatherDescription = currentElement.GetProperty("weather_descriptions")[0].GetString() ?? "";
 
-        // Create dataset model
         WeatherDataset weatherDataset = new WeatherDataset
         {
             Id = Guid.NewGuid().ToString(),
@@ -50,7 +47,6 @@ public class WeatherService : BaseDataService<WeatherDataset>
         return weatherDatasets;
     }
 
-    // Convenience method with typed parameter
     public async Task<List<WeatherDataset>> GetWeatherDataAsync(string location)
     {
         return await GetDataAsync(location);
